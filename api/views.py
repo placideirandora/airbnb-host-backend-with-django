@@ -47,7 +47,7 @@ def get_place_info(request):
     info = PlaceInfo.objects.all()
 
     if not info:
-        message = {'warning': 'Something is wrong with your Data'}
+        message = {'message': 'There is no Place Info at the moment'}
 
         return Response(message, HTTP_400_BAD_REQUEST)
 
@@ -77,7 +77,8 @@ def get_property_info(request):
     info = PropertyAndGuestInfo.objects.all()
 
     if not info:
-        message = {'warning': 'Something is wrong with your Data'}
+        message = {
+            'message': 'There is no Property And Guest Info at the moment'}
 
         return Response(message, HTTP_400_BAD_REQUEST)
 
@@ -107,7 +108,7 @@ def get_location_info(request):
     info = LocationInfo.objects.all()
 
     if not info:
-        message = {'warning': 'Something is wrong with your Data'}
+        message = {'message': 'There is no Location Info at the moment'}
 
         return Response(message, HTTP_400_BAD_REQUEST)
 
