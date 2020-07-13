@@ -1,4 +1,4 @@
-airbnb/airbnb/__pycache__
-airbnb/db.sqlite3
-airbnb/api/__pycache__
-airbnb/api/migrations/__pycache__
+airbnb/__pycache__
+db.sqlite3
+api/__pycache__
+api/migrations/__pycache__
