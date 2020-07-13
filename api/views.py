@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST)
 
-from .models import LocationInfo
-from .serializers import LocationInfoSerializer
+from .models import PlaceInfo, LocationInfo
+from .serializers import PlaceInfoSerializer, LocationInfoSerializer
 
 # Create your views here.
 
@@ -13,6 +13,8 @@ from .serializers import LocationInfoSerializer
 @api_view(['GET'])
 def index(request):
     api_urls = {
+        'Post Place Info [POST]': '/api/v1/post-place-info',
+        'Get Place Info [GET]': '/api/v1/get-place-info',
         'Post Location Info [POST]': '/api/v1/post-location-info',
         'Get Location Info [GET]': '/api/v1/get-location-info',
     }
@@ -20,6 +22,36 @@ def index(request):
     return Response(
         {'message': 'Welcome to the Airbnb Host Sample API',
          'endpoints': api_urls}, HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(['POST'])
+def post_place_info(request):
+    serializer = PlaceInfoSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+        return Response(serializer.data, status=HTTP_201_CREATED)
+    else:
+        message = {'warning': 'Something is wrong with your Data'}
+
+        return Response(message, status=HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_place_info(request):
+    info = PlaceInfo.objects.all()
+
+    if not info:
+        message = {'warning': 'Something is wrong with your Data'}
+
+        return Response(message, HTTP_400_BAD_REQUEST)
+
+    else:
+        serializer = PlaceInfoSerializer(info, many=True)
+
+        return Response(serializer.data, HTTP_200_OK)
 
 
 @csrf_exempt
